@@ -10,7 +10,7 @@ RUN npm i -g serve
 
 COPY . .
 
-RUN npm run build
+RUN npm run build:staging
 
 EXPOSE 5173
 
