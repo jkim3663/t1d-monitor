@@ -4,10 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "dev:local": "vite --mode localmode",
+    "dev:staging": "vite --mode staging",
+
+    "build:local": "vite build --mode localmode",
+    "build:staging": "vite build --mode staging",
+
+    "preview:local": "vite preview --mode localmode",
+    "preview:staging": "vite preview --mode staging"
   },
   "dependencies": {
     "react": "^19.2.4",
