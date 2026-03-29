@@ -18,5 +18,19 @@ Type 1 Diabetes Monitoring Dashboard
 - have docker installed
 - run docker deskop
 ### Instructions
-1. bulid image by running ```docker build . -t "app-name:v1.0"```
-2. run docker image by running ```docker run -p 5173:5173 app-name:v1.0```
+1. bulid image by running ```docker build . -t "frontend:v1.0"```
+2. run docker image by running ```docker run -p 5173:5173 frontend:v1.0```
+
+# Backend
+## Environments
+- local: build using maven and use IDE or run ```java -jar target/app-name.jar```
+- staging: use Dockerfile
+
+## Run Local
+Either use your IDE or run ```java -jar be/target/app-name.jar```
+
+## Run Docker image
+### Instructions
+1. run ```mvn clean package```
+2. ```docker build . -t "backend"```
+3. run docker image by cmd ```docker run -p 8443:8443 backend```
