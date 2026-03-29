@@ -1,4 +1,4 @@
-package be.t1d;
+package t1d;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

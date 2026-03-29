@@ -1,4 +1,4 @@
-package be.t1d;
+package t1d;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
