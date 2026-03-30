@@ -22,15 +22,11 @@ Type 1 Diabetes Monitoring Dashboard
 2. run docker image by running ```docker run -p 5173:5173 frontend:v1.0```
 
 # Backend
+## Information
+Using github starter pack http://localhost:8080/fhir/Patient
+
 ## Environments
-- local: build using maven and use IDE or run ```java -jar target/app-name.jar```
-- staging: use Dockerfile
+- local: ```docker-compose up``` from fhir/ folder
 
 ## Run Local
-Either use your IDE or run ```java -jar be/target/app-name.jar```
-
-## Run Docker image
-### Instructions
-1. run ```mvn clean package```
-2. ```docker build . -t "backend"```
-3. run docker image by cmd ```docker run -p 8443:8443 backend```
+Run ```docker-compose up``` from fhir/ folder
