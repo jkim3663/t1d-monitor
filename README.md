@@ -26,7 +26,8 @@ Type 1 Diabetes Monitoring Dashboard
 Using github starter pack http://localhost:8080/fhir/Patient
 
 ## Environments
-- local: ```docker-compose up``` from fhir/ folder
+- local: ```.env.local``` and ```hapi.application-local.yaml```
+- dev: ```.env.dev``` and ```hapi.application-dev.yaml```
 
 ## Run Local
-Run ```docker-compose up``` from fhir/ folder
+Run ```docker-compose --env-file .env.local up``` from fhir/ folder
