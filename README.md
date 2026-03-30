@@ -1,6 +1,10 @@
 # t1d-monitor
 Type 1 Diabetes Monitoring Dashboard
 
+# Tech Stack
+- Frontend leverages React + TypeScript using Vite.
+- Backend and database leverage [HAPI FHIR Starter](https://github.com/hapifhir/hapi-fhir-jpaserver-starter) with custom security implementation 
+
 # Frontend
 ## Environments
 - local: one we will do development from our laptop
