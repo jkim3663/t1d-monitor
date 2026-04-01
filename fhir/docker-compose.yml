@@ -1,4 +1,13 @@
 services:
+  frontend:
+    build:
+      context: ../fe
+      dockerfile: Dockerfile
+    ports:
+    - "5173:5173"
+    depends_on:
+      - fhir
+
   fhir:
     container_name: ${APP_CONTAINER_NAME}
     image: hapiproject/hapi:latest

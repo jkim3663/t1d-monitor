@@ -5,6 +5,10 @@ Type 1 Diabetes Monitoring Dashboard
 - Frontend leverages React + TypeScript using Vite.
 - Backend and database leverage [HAPI FHIR Starter](https://github.com/hapifhir/hapi-fhir-jpaserver-starter) with custom security implementation 
 
+# Running Entire Application Locally
+Docker compose has been configured to spin up all db, backend, and frontend.
+Run ```docker-compose --env-file .env.local up``` from t1d-monitor/fhir/ directory.
+
 # Frontend
 ## Environments
 - local: one we will do development from our laptop
