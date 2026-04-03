@@ -3,6 +3,8 @@ services:
     build:
       context: ../fe
       dockerfile: Dockerfile
+      args:
+        NPM_BUILD_CMD: ${FE_BUILD}
     ports:
     - "5173:5173"
     depends_on:

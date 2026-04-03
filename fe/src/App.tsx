@@ -7,7 +7,7 @@ import Sidebar from './components/sidebar/sidebar';
 function App() {
 
   useEffect(() => {
-    console.log('current mode: ', import.meta.env.MODE)
+    console.log('current mode: ', import.meta.env.VITE_APP_ENV);
   }, []);
 
   return (

@@ -7,7 +7,11 @@ Type 1 Diabetes Monitoring Dashboard
 
 # Running Entire Application Locally
 Docker compose has been configured to spin up all db, backend, and frontend.
-Run ```docker-compose --env-file .env.local up``` from t1d-monitor/fhir/ directory.
+Run ```docker compose --env-file .env.local up``` from t1d-monitor/fhir/ directory.
+If there is change in frontend, then image should be re-built. Run below commands in-order:
+1. ```docker compose --env-file .env.local down```
+2. ```docker compose --env-file .env.local build --no-cache```
+3. ```docker compose --env-file .env.local up```
 
 # Frontend
 ## Environments
@@ -38,4 +42,4 @@ Using github starter pack http://localhost:8080/fhir/Patient
 - dev: ```.env.dev``` and ```hapi.application-dev.yaml```
 
 ## Run Local
-Run ```docker-compose --env-file .env.local up``` from fhir/ folder
+Run ```docker compose --env-file .env.local up``` from fhir/ folder

@@ -1,6 +1,6 @@
 // base path to call FHIR APIs
 
-const basePath: string = import.meta.env.APP_SERVER_URL + 'fhir/';
+const basePath: string = `${import.meta.env.VITE_APP_SERVER_URL}` + 'fhir';
 
 const api = {
     get: (endpoint: string) => {

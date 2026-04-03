@@ -5,7 +5,7 @@ import styles from './sidebar.module.scss';
 function Sidebar() {
     return (
         <div className={styles.sidebarChildContainer}>
-            <div>
+            <div className={styles.appTitle}>
                 Type 1 diabetes monitor
             </div>
             <nav className={styles.navBar}>
