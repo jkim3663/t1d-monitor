@@ -1,0 +1,19 @@
+.topContainer {
+    min-height: 100vh;
+    
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.sidebarParentContainer {
+    flex-shrink: 0;
+    padding-right: 20px;
+    border-right: 2px solid #D1D5DB;
+}
+
+.mainContainer {
+    padding-left: 20px;
+}
