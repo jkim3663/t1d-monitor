@@ -13,11 +13,9 @@ type User struct {
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	fmt.Printf("Request body: $v\n", r.Body)
 
 	var u User
 	json.NewDecoder(r.Body).Decode(&u)
-	fmt.Printf("decoded User: %v\n", u)
 	// TODO: replace this with actual query lookup and hasing, etc.
 	if u.Username == "admin" && u.Password == "1234" {
 		tokenString, err := CreateToken(u.Username)
