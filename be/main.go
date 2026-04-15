@@ -1,8 +1,8 @@
 package main
 
 import (
-	initializer "jkim3663/applogin/initializer"
-	login "jkim3663/applogin/internal"
+	initializer "jkim3663/applogin/internal/initializer"
+	login "jkim3663/applogin/internal/login"
 	"log"
 	"net/http"
 	"os"

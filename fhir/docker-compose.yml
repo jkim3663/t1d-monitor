@@ -32,6 +32,34 @@ services:
     volumes:
       - ./hapi.postgress.data:/var/lib/postgresql
 
+  auth-db:
+    image: postgres:18
+    container_name: t1d-auth-db
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: ${GO_DB_PASSWORD}
+      POSTGRES_USER: ${GO_DB_USER}
+      POSTGRES_DB: t1d
+    volumes:
+      - ./app.postgres.data:/var/lib/postgresql
+
+  auth-app:
+    build:
+      context: ../be
+      dockerfile: Dockerfile
+    container_name: t1d-auth-app
+    depends_on:
+      - auth-db
+    environment:
+      DB_HOST: auth-db
+      DB_PORT: 5432
+      DB_USER: ${GO_DB_USER}
+      DB_PASSWORD: ${GO_DB_PASSWORD}
+      DB_NAME: t1d
+      PORT: 8081
+    ports:
+      - "8081:8081"
+
 configs:
   hapi:
     file: ${CONFIG_FILE}
