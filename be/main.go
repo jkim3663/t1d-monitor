@@ -1,8 +1,8 @@
 package main
 
 import (
-	initializer "jkim3663/applogin/internal/initializer"
-	login "jkim3663/applogin/internal/login"
+	"jkim3663/applogin/handlers"
+	"jkim3663/applogin/internal/initializer"
 	"log"
 	"net/http"
 	"os"
@@ -14,8 +14,8 @@ func main() {
 	initializer.LoadEnvVariables()
 
 	router := mux.NewRouter()
-	router.HandleFunc("/login", login.LoginHandler).Methods("POST")
-	router.HandleFunc("/test", login.TestHandler).Methods("POST")
+	router.HandleFunc("/login", handlers.LoginHandler).Methods("POST")
+	router.HandleFunc("/test", handlers.TestHandler).Methods("POST")
 	log.Println("Starting the server")
 
 	serverUrl := os.Getenv("GO_APP_URL") + ":" + os.Getenv("PORT")
