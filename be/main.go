@@ -4,7 +4,7 @@ import (
 	"jkim3663/applogin/handlers"
 	dbconnection "jkim3663/applogin/internal/db"
 	"jkim3663/applogin/internal/initializer"
-	"jkim3663/applogin/internal/sql"
+	dbsql "jkim3663/applogin/internal/sql"
 	"log"
 	"net/http"
 	"os"
@@ -20,16 +20,20 @@ func main() {
 	}
 	defer pool.Close()
 
-	queries := sql.New(pool)
-	_ = queries
+	queries := dbsql.New(pool)
+
+	h := &handlers.Handler{
+		Queries: queries,
+	}
 
 	router := mux.NewRouter()
-	router.HandleFunc("/login", handlers.LoginHandler).Methods("POST")
-	router.HandleFunc("/test", handlers.TestHandler).Methods("POST")
+	router.HandleFunc("/register", h.RegisterUserHandler).Methods("POST")
+	router.HandleFunc("/login", h.LoginHandler).Methods("POST")
+	router.HandleFunc("/test", h.TestHandler).Methods("POST")
 	log.Println("Starting the server")
 
 	serverUrl := os.Getenv("GO_APP_URL") + ":" + os.Getenv("PORT")
 	if err := http.ListenAndServe(serverUrl, router); err != nil {
-		log.Println("Could not start the server", err)
+		log.Fatal("Could not start the server", err)
 	}
 }
