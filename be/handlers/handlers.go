@@ -63,21 +63,25 @@ func (h *Handler) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// TODO: later replace this with actual DB query
-	_ = h.Queries
-	// TODO: replace this with actual query lookup and hasing, etc.
-	if loginRequest.Email == "admin" && loginRequest.Password == "1234" {
-		tokenString, err := auth.CreateToken(loginRequest.Email)
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			fmt.Fprint(w, "failed to create token")
-		}
-		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, tokenString)
+	user, err := h.Queries.GetUser(r.Context(), loginRequest.Email)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprint(w, "invalid email")
 		return
-	} else {
-		w.WriteHeader(http.StatusUnauthorized)
-		fmt.Fprint(w, "invalid credentials")
 	}
+	if err := bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(loginRequest.Password)); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprint(w, "invalid email or password")
+		return
+	}
+
+	tokenString, err := auth.CreateToken(loginRequest.Email)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprint(w, "failed to create token")
+	}
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprint(w, tokenString)
 }
 
 func (h *Handler) TestHandler(w http.ResponseWriter, r *http.Request) {
