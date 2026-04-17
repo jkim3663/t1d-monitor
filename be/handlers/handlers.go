@@ -101,7 +101,3 @@ func (h *Handler) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprint(w, `{"message":"login successful"}`)
 }
-
-func (h *Handler) TestHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "Welcome to the the protected area")
-}

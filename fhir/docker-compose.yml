@@ -52,11 +52,6 @@ services:
     depends_on:
       - auth-db
     environment:
-      DB_HOST: auth-db
-      DB_PORT: 5432
-      DB_USER: ${GO_DB_USER}
-      DB_PASSWORD: ${GO_DB_PASSWORD}
-      DB_NAME: t1d
       PORT: 8081
     ports:
       - "8081:8081"
