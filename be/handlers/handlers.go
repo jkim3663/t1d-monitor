@@ -6,6 +6,7 @@ import (
 	"jkim3663/applogin/internal/auth"
 	dbsql "jkim3663/applogin/internal/sql"
 	"net/http"
+	"os"
 
 	"golang.org/x/crypto/bcrypt"
 )
@@ -62,7 +63,12 @@ func (h *Handler) LoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// TODO: later replace this with actual DB query
+	if loginRequest.Email == "" || loginRequest.Password == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprint(w, "email and password are required")
+		return
+	}
+
 	user, err := h.Queries.GetUser(r.Context(), loginRequest.Email)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -79,25 +85,23 @@ func (h *Handler) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprint(w, "failed to create token")
+		return
 	}
+
+	http.SetCookie(w, &http.Cookie{
+		Name:     "access_token",
+		Value:    tokenString,
+		Path:     "/",
+		HttpOnly: true,
+		Secure:   !(os.Getenv("T1D_APP_ENV") == "local"),
+		SameSite: http.SameSiteLaxMode,
+		MaxAge:   60 * 60, // 1 hour
+	})
+
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprint(w, tokenString)
+	fmt.Fprint(w, `{"message":"login successful"}`)
 }
 
 func (h *Handler) TestHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	tokenString := r.Header.Get("Authorization")
-	if tokenString == "" {
-		w.WriteHeader(http.StatusUnauthorized)
-		fmt.Fprint(w, "Missing authorization header")
-		return
-	}
-
-	err := auth.VerifyToken(tokenString)
-	if err != nil {
-		w.WriteHeader(http.StatusUnauthorized)
-		fmt.Fprint(w, "Invalid token")
-		return
-	}
 	fmt.Fprint(w, "Welcome to the the protected area")
 }

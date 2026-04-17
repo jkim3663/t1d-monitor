@@ -5,6 +5,7 @@ import (
 	dbconnection "jkim3663/applogin/internal/db"
 	"jkim3663/applogin/internal/initializer"
 	dbsql "jkim3663/applogin/internal/sql"
+	"jkim3663/applogin/middleware"
 	"log"
 	"net/http"
 	"os"
@@ -29,7 +30,11 @@ func main() {
 	router := mux.NewRouter()
 	router.HandleFunc("/register", h.RegisterUserHandler).Methods("POST")
 	router.HandleFunc("/login", h.LoginHandler).Methods("POST")
-	router.HandleFunc("/test", h.TestHandler).Methods("POST")
+
+	protectedRouter := router.PathPrefix("").Subrouter()
+	protectedRouter.Use(middleware.RequireAuth)
+	protectedRouter.HandleFunc("/test", h.TestHandler).Methods("POST")
+
 	log.Println("Starting the server")
 
 	serverUrl := os.Getenv("GO_APP_URL") + ":" + os.Getenv("PORT")
