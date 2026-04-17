@@ -1,6 +1,7 @@
 // base path to call FHIR APIs
 
-const basePath: string = `${import.meta.env.VITE_APP_SERVER_URL}` + 'fhir';
+const basePath: string = `${import.meta.env.VITE_APP_SERVER_URL}` + 'api/fhir';
+const goAppBasePath: string = `${import.meta.env.VITE_APP_SERVER_URL}`;
 
 const api = {
     get: (endpoint: string) => {
@@ -42,4 +43,21 @@ const api = {
     }
 };
 
-export { api };
+const goAppApi = {
+    get: (endpoint: string) => {
+        return fetch(`${goAppBasePath}/${endpoint}`, {
+            method: 'GET'
+        });
+    },
+    post: (endpoint: string, body: object) => {
+        return fetch(`${goAppBasePath}/${endpoint}`, {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: body && JSON.stringify(body)
+        });
+    },
+}
+
+export { api, goAppApi };

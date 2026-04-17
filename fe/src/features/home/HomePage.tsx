@@ -1,11 +1,9 @@
-import { fhirR4 } from '@smile-cdr/fhirts';
-import { QueryClient, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { getPatient } from '../../apis/patients';
 import styles from './HomePage.module.scss'
 
 function HomePage() {
-    const queryClient = new QueryClient();
-    const { isPending, isError, data, error } = useQuery({
+    const { isPending, isError, data } = useQuery({
         queryKey: ['patient'],
         queryFn: () => {
             return getPatient(1000);

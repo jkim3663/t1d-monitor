@@ -101,3 +101,9 @@ func (h *Handler) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprint(w, `{"message":"login successful"}`)
 }
+
+func (h *Handler) SessionHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprint(w, `{"authenticated": true}`)
+}

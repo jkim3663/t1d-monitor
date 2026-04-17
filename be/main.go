@@ -41,6 +41,7 @@ func main() {
 	// Protected routes that require JWT auth
 	protectedRouter := router.PathPrefix("").Subrouter()
 	protectedRouter.Use(middleware.RequireAuth)
+	protectedRouter.HandleFunc("/session", h.SessionHandler).Methods("GET")
 	// Protected routes with reverse proxy
 	protectedRouter.PathPrefix("/api/fhir/").Handler(fhirProxy)
 
