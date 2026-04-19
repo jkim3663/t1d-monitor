@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import styles from './App.module.scss';
 import HomePage from './features/home/HomePage';
 import Sidebar from './components/sidebar/sidebar';
+import PatientMonitorPage from './features/patient-monitor/PatientMonitorPage';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Navigate to='/home'/>}></Route>
           <Route path='/home' element={<HomePage/>}></Route>
+          <Route path='/patient-monitor' element={<PatientMonitorPage/>}></Route>
         </Routes>
       </div>
     </div>
