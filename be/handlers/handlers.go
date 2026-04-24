@@ -6,7 +6,6 @@ import (
 	"jkim3663/applogin/internal/auth"
 	dbsql "jkim3663/applogin/internal/sql"
 	"net/http"
-	"os"
 
 	"golang.org/x/crypto/bcrypt"
 )
@@ -93,7 +92,7 @@ func (h *Handler) LoginHandler(w http.ResponseWriter, r *http.Request) {
 		Value:    tokenString,
 		Path:     "/",
 		HttpOnly: true,
-		Secure:   !(os.Getenv("T1D_APP_ENV") == "local"),
+		Secure:   false,
 		SameSite: http.SameSiteLaxMode,
 		MaxAge:   60 * 60, // 1 hour
 	})
