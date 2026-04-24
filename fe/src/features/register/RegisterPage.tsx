@@ -3,7 +3,7 @@ import styles from './RegisterPage.module.scss';
 import { validateEmail } from '../../utils/util';
 import { useMutation } from '@tanstack/react-query';
 import { postRegistration } from '../../apis/authorization';
-import { replace, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 type InputType = {
     value: 'email' | 'password'

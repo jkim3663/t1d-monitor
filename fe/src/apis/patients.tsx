@@ -4,7 +4,7 @@ import { api } from './api';
 const patientPath: string = 'Patient';
 
 export function getPatient(patientId: number): Promise<fhirR4.Patient> {
-    const apiEndpoint: string = patientPath + `/${patientId}`;
+    const apiEndpoint: string = patientPath + `/patient-${patientId}`;
     return api.get(apiEndpoint).then((resp) => resp.json());
 }
 
