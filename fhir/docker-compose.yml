@@ -13,8 +13,8 @@ services:
   fhir:
     container_name: ${APP_CONTAINER_NAME}
     image: hapiproject/hapi:latest
-    ports:
-      - "8080:8080"
+    expose:
+      - "8080"
     configs:
       - source: hapi
         target: /app/config/application.yaml
@@ -30,7 +30,7 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_DB: hapi
     volumes:
-      - ./hapi.postgress.data:/var/lib/postgresql
+      - hapi_pg_data:/var/lib/postgresql
 
   auth-db:
     image: postgres:18
@@ -41,8 +41,8 @@ services:
       POSTGRES_USER: ${GO_DB_USER}
       POSTGRES_DB: t1d
     volumes:
-      - ./app.postgres.data:/var/lib/postgresql
-      - ../be/initsql:/docker-entrypoint-initdb.d
+      - auth_pg_data:/var/lib/postgresql
+      - ../be/initsql:/docker-entrypoint-initdb.d:ro
 
   auth-app:
     build:
@@ -59,3 +59,7 @@ services:
 configs:
   hapi:
     file: ${CONFIG_FILE}
+
+volumes:
+  hapi_pg_data:
+  auth_pg_data:

@@ -61,7 +61,7 @@ type InputType = {
                 Email
             </div>
             <input 
-                className={styles.loginInput}
+                className={styles.registerInput}
                 placeholder='Enter email:' 
                 value={email}
                 onChange={(e) => handleChange(e, {value: 'email'})}
@@ -70,13 +70,13 @@ type InputType = {
                 Password
             </div>
             <input
-                className={styles.loginInput}
+                className={styles.registerInput}
                 placeholder='Enter password:' 
                 value={password}
                 onChange={(e) => handleChange(e, {value: 'password'})}
             />
             <button 
-                className={styles.signInButton}
+                className={styles.submitButton}
                 onClick={handleRegisterClick}
             >
                 Register

@@ -25,11 +25,11 @@ Type 1 Diabetes Monitoring Dashboard
 Docker compose has been configured to spin up all db, backend, and frontend.
 Run ```docker compose --env-file .env.local up``` from t1d-monitor/fhir/ directory.
 If there is change in frontend, then image should be re-built. Run below commands in-order:
-1. ```docker compose --env-file .env.local down -v && rm -rf ./app.postgres.data```
+1. ```docker compose --env-file .env.local down -v``
 2. ```docker compose --env-file .env.local build --no-cache```
 3. ```docker compose --env-file .env.local up```
 Or just run everything in one command:
-```docker compose --env-file .env.local down -v && rm -rf ./app.postgres.data && docker compose --env-file .env.local build --no-cache && docker compose --env-file .env.local up```
+```docker compose --env-file .env.local down -v && docker compose --env-file .env.local build --no-cache && docker compose --env-file .env.local up```
 
 # Frontend
 ## Environments
