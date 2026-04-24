@@ -15,7 +15,7 @@ func NewPool() (*pgxpool.Pool, error) {
 	port := os.Getenv("AUTH_DB_PORT")
 	user := os.Getenv("AUTH_DB_USER")
 	password := os.Getenv("AUTH_DB_PASSWORD")
-	dbName := os.Getenv("AUHT_DB_NAME")
+	dbName := os.Getenv("AUTH_DB_NAME")
 	sslmode := os.Getenv("AUTH_DB_SSLMODE")
 	if sslmode == "" {
 		sslmode = "disable"
