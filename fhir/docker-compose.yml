@@ -56,6 +56,45 @@ services:
     ports:
       - "8081:8081"
 
+  data-loader:
+    image: curlimages/curl:latest
+    depends_on:
+      - fhir
+    volumes:
+      - ../mock-data:/data:ro
+    restart: "no"
+    command:
+      - /bin/sh
+      - -ec
+      - |
+        echo "Files mounted in /data:"
+        ls -la /data
+
+        echo "Waiting for FHIR server..."
+        until curl -fsS http://fhir:8080/fhir/metadata > /dev/null; do
+          echo "FHIR not ready, retrying..."
+          sleep 3
+        done
+
+        echo "FHIR ready. Loading mock-bundle.json..."
+
+        HTTP_CODE=$$(curl -sS -o /tmp/load-response.json -w "%{http_code}" \
+          -X POST http://fhir:8080/fhir \
+          -H "Content-Type: application/fhir+json" \
+          --data-binary @/data/mock-bundle.json)
+
+        echo "FHIR load HTTP code: $$HTTP_CODE"
+        echo "FHIR response:"
+        cat /tmp/load-response.json
+        echo
+
+        if [ "$$HTTP_CODE" -lt 200 ] || [ "$$HTTP_CODE" -ge 300 ]; then
+          echo "FHIR data load failed"
+          exit 1
+        fi
+
+        echo "Mock data loaded successfully."
+
 configs:
   hapi:
     file: ${CONFIG_FILE}

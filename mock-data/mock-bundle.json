@@ -1,0 +1,540 @@
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:patient-1000",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "patient-1000",
+        "identifier": [
+          {
+            "system": "http://t1d-monitor.example.org/mrn",
+            "value": "MRN-1000"
+          }
+        ],
+        "name": [
+          {
+            "use": "official",
+            "family": "Kim",
+            "given": [
+              "Alex"
+            ]
+          }
+        ],
+        "gender": "male",
+        "birthDate": "2007-04-12"
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Patient/patient-1000"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:condition-t1d-1000",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "condition-t1d-1000",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active",
+              "display": "Active"
+            }
+          ]
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+              "code": "confirmed",
+              "display": "Confirmed"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "46635009",
+              "display": "Type 1 diabetes mellitus"
+            }
+          ],
+          "text": "Type 1 Diabetes Mellitus"
+        },
+        "subject": {
+          "reference": "Patient/patient-1000"
+        },
+        "onsetDateTime": "2018-09-01"
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Condition/condition-t1d-1000"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:medreq-glargine-1000",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "medreq-glargine-1000",
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "274783",
+              "display": "Insulin Glargine"
+            }
+          ],
+          "text": "Insulin glargine 100 units/mL injectable solution"
+        },
+        "subject": {
+          "reference": "Patient/patient-1000"
+        },
+        "authoredOn": "2026-04-01",
+        "dosageInstruction": [
+          {
+            "text": "Inject 18 units subcutaneously once daily at bedtime",
+            "timing": {
+              "repeat": {
+                "frequency": 1,
+                "period": 1,
+                "periodUnit": "d"
+              }
+            },
+            "route": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "34206005",
+                  "display": "Subcutaneous route"
+                }
+              ],
+              "text": "Subcutaneous"
+            },
+            "doseAndRate": [
+              {
+                "doseQuantity": {
+                  "value": 18,
+                  "unit": "units",
+                  "system": "http://unitsofmeasure.org",
+                  "code": "[iU]"
+                }
+              }
+            ]
+          }
+        ],
+        "dispenseRequest": {
+          "validityPeriod": {
+            "start": "2026-04-01",
+            "end": "2027-04-01"
+          },
+          "quantity": {
+            "value": 3,
+            "unit": "pens"
+          },
+          "expectedSupplyDuration": {
+            "value": 30,
+            "unit": "days",
+            "system": "http://unitsofmeasure.org",
+            "code": "d"
+          }
+        }
+      },
+      "request": {
+        "method": "PUT",
+        "url": "MedicationRequest/medreq-glargine-1000"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:medreq-lispro-1000",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "medreq-lispro-1000",
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "860975",
+              "display": "Insulin Lispro"
+            }
+          ],
+          "text": "Insulin lispro 100 units/mL injectable solution"
+        },
+        "subject": {
+          "reference": "Patient/patient-1000"
+        },
+        "authoredOn": "2026-04-01",
+        "dosageInstruction": [
+          {
+            "text": "Inject 6 units subcutaneously before meals; adjust using correction scale",
+            "timing": {
+              "repeat": {
+                "frequency": 3,
+                "period": 1,
+                "periodUnit": "d"
+              }
+            },
+            "route": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "34206005",
+                  "display": "Subcutaneous route"
+                }
+              ],
+              "text": "Subcutaneous"
+            },
+            "doseAndRate": [
+              {
+                "doseQuantity": {
+                  "value": 6,
+                  "unit": "units",
+                  "system": "http://unitsofmeasure.org",
+                  "code": "[iU]"
+                }
+              }
+            ]
+          }
+        ],
+        "dispenseRequest": {
+          "validityPeriod": {
+            "start": "2026-04-01",
+            "end": "2027-04-01"
+          },
+          "expectedSupplyDuration": {
+            "value": 30,
+            "unit": "days",
+            "system": "http://unitsofmeasure.org",
+            "code": "d"
+          }
+        }
+      },
+      "request": {
+        "method": "PUT",
+        "url": "MedicationRequest/medreq-lispro-1000"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:dispense-glargine-1000",
+      "resource": {
+        "resourceType": "MedicationDispense",
+        "id": "dispense-glargine-1000",
+        "status": "completed",
+        "medicationCodeableConcept": {
+          "text": "Insulin glargine 100 units/mL injectable solution"
+        },
+        "subject": {
+          "reference": "Patient/patient-1000"
+        },
+        "authorizingPrescription": [
+          {
+            "reference": "MedicationRequest/medreq-glargine-1000"
+          }
+        ],
+        "quantity": {
+          "value": 3,
+          "unit": "pens"
+        },
+        "daysSupply": {
+          "value": 30,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        },
+        "whenHandedOver": "2026-04-01T10:00:00Z"
+      },
+      "request": {
+        "method": "PUT",
+        "url": "MedicationDispense/dispense-glargine-1000"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:dispense-lispro-1000",
+      "resource": {
+        "resourceType": "MedicationDispense",
+        "id": "dispense-lispro-1000",
+        "status": "completed",
+        "medicationCodeableConcept": {
+          "text": "Insulin lispro 100 units/mL injectable solution"
+        },
+        "subject": {
+          "reference": "Patient/patient-1000"
+        },
+        "authorizingPrescription": [
+          {
+            "reference": "MedicationRequest/medreq-lispro-1000"
+          }
+        ],
+        "quantity": {
+          "value": 3,
+          "unit": "pens"
+        },
+        "daysSupply": {
+          "value": 30,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        },
+        "whenHandedOver": "2026-03-15T10:00:00Z"
+      },
+      "request": {
+        "method": "PUT",
+        "url": "MedicationDispense/dispense-lispro-1000"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:admin-glargine-taken-1000",
+      "resource": {
+        "resourceType": "MedicationAdministration",
+        "id": "admin-glargine-taken-1000",
+        "status": "completed",
+        "medicationCodeableConcept": {
+          "text": "Insulin glargine 100 units/mL injectable solution"
+        },
+        "subject": {
+          "reference": "Patient/patient-1000"
+        },
+        "request": {
+          "reference": "MedicationRequest/medreq-glargine-1000"
+        },
+        "effectiveDateTime": "2026-04-23T22:00:00Z",
+        "dosage": {
+          "text": "18 units subcutaneously at bedtime",
+          "dose": {
+            "value": 18,
+            "unit": "units",
+            "system": "http://unitsofmeasure.org",
+            "code": "[iU]"
+          },
+          "route": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "34206005",
+                "display": "Subcutaneous route"
+              }
+            ],
+            "text": "Subcutaneous"
+          }
+        }
+      },
+      "request": {
+        "method": "PUT",
+        "url": "MedicationAdministration/admin-glargine-taken-1000"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:admin-lispro-missed-1000",
+      "resource": {
+        "resourceType": "MedicationAdministration",
+        "id": "admin-lispro-missed-1000",
+        "status": "not-done",
+        "statusReason": [
+          {
+            "text": "Patient reported missed pre-meal insulin dose"
+          }
+        ],
+        "medicationCodeableConcept": {
+          "text": "Insulin lispro 100 units/mL injectable solution"
+        },
+        "subject": {
+          "reference": "Patient/patient-1000"
+        },
+        "request": {
+          "reference": "MedicationRequest/medreq-lispro-1000"
+        },
+        "effectiveDateTime": "2026-04-24T12:00:00Z",
+        "dosage": {
+          "text": "Scheduled 6 units before lunch; dose not taken",
+          "dose": {
+            "value": 6,
+            "unit": "units",
+            "system": "http://unitsofmeasure.org",
+            "code": "[iU]"
+          }
+        }
+      },
+      "request": {
+        "method": "PUT",
+        "url": "MedicationAdministration/admin-lispro-missed-1000"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-glucose-low-1-1000",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-glucose-low-1-1000",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "Laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2339-0",
+              "display": "Glucose [Mass/volume] in Blood"
+            }
+          ],
+          "text": "Blood glucose"
+        },
+        "subject": {
+          "reference": "Patient/patient-1000"
+        },
+        "effectiveDateTime": "2026-04-24T01:15:00Z",
+        "valueQuantity": {
+          "value": 62,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/dL"
+        }
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/obs-glucose-low-1-1000"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-glucose-low-2-1000",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-glucose-low-2-1000",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "Laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2339-0",
+              "display": "Glucose [Mass/volume] in Blood"
+            }
+          ],
+          "text": "Blood glucose"
+        },
+        "subject": {
+          "reference": "Patient/patient-1000"
+        },
+        "effectiveDateTime": "2026-04-24T02:10:00Z",
+        "valueQuantity": {
+          "value": 58,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/dL"
+        }
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/obs-glucose-low-2-1000"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-glucose-low-3-1000",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-glucose-low-3-1000",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "Laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2339-0",
+              "display": "Glucose [Mass/volume] in Blood"
+            }
+          ],
+          "text": "Blood glucose"
+        },
+        "subject": {
+          "reference": "Patient/patient-1000"
+        },
+        "effectiveDateTime": "2026-04-24T03:05:00Z",
+        "valueQuantity": {
+          "value": 65,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/dL"
+        }
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/obs-glucose-low-3-1000"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-glucose-normal-1000",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-glucose-normal-1000",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "Laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2339-0",
+              "display": "Glucose [Mass/volume] in Blood"
+            }
+          ],
+          "text": "Blood glucose"
+        },
+        "subject": {
+          "reference": "Patient/patient-1000"
+        },
+        "effectiveDateTime": "2026-04-24T08:00:00Z",
+        "valueQuantity": {
+          "value": 118,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/dL"
+        }
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/obs-glucose-normal-1000"
+      }
+    }
+  ]
+}
