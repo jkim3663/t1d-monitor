@@ -28,6 +28,8 @@ If there is change in frontend, then image should be re-built. Run below command
 1. ```docker compose --env-file .env.local down -v && rm -rf ./app.postgres.data```
 2. ```docker compose --env-file .env.local build --no-cache```
 3. ```docker compose --env-file .env.local up```
+Or just run everything in one command:
+```docker compose --env-file .env.local down -v && rm -rf ./app.postgres.data && docker compose --env-file .env.local build --no-cache && docker compose --env-file .env.local up```
 
 # Frontend
 ## Environments

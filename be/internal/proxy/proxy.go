@@ -25,5 +25,14 @@ func FhirProxy() (http.Handler, error) {
 		pr.SetURL(target)
 		pr.Out.URL.Path = strings.TrimPrefix(pr.In.URL.Path, "/api")
 	}
+
+	proxy.ModifyResponse = func(resp *http.Response) error {
+		resp.Header.Del("Access-Control-Allow-Origin")
+		resp.Header.Del("Access-Control-Allow-Credentials")
+		resp.Header.Del("Access-Control-Allow-Headers")
+		resp.Header.Del("Access-Control-Allow-Methods")
+		resp.Header.Del("Access-Control-Expose-Headers")
+		return nil
+	}
 	return proxy, nil
 }

@@ -1,0 +1,24 @@
+.registerPageContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    margin: 40px;
+    gap: 8px;
+
+    .registerInput {
+        min-width: 20px;
+        min-height: 20px;
+        max-width: 200px;
+    }
+
+    .submitButton {
+        min-width: 20px;
+        min-height: 20px;
+        max-width: 200px;
+    }
+
+    .errorMessage {
+        color: #FF0000;
+    }
+}
