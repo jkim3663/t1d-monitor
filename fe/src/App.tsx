@@ -6,6 +6,7 @@ import Sidebar from './components/sidebar/sidebar';
 import LoginPage from './features/login/LoginPage';
 import ProtectedLayout from './protection';
 import RegisterPage from './features/register/RegisterPage';
+import PrescriptionPage from './features/prescription/PrescriptionPage';
 
 function App() {
 
@@ -34,6 +35,7 @@ function App() {
         <Route element={<AppLayout />}>
           <Route path='/' element={<Navigate to='/home' replace />} />
           <Route path='/home' element={<HomePage />} />
+          <Route path='/prescription' element={<PrescriptionPage />} />
         </Route>
       </Route>
     </Routes>
