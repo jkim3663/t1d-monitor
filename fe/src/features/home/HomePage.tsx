@@ -4,8 +4,6 @@ import {
     getPatient,
     getGlucoseObservations,
     getA1CObservations,
-    getMedicationRequests,
-    getMedicationAdministrations,
 } from '../../apis/patients';
 import styles from './HomePage.module.scss';
 
@@ -35,32 +33,20 @@ function a1cLabel(value: number): string {
     return 'Poor control';
 }
 
-function medName(req: fhirR4.MedicationRequest): string {
-    return (req as any).medicationCodeableConcept?.text ?? '—';
-}
-
-function adminMedName(admin: fhirR4.MedicationAdministration): string {
-    return (admin as any).medicationCodeableConcept?.text ?? '—';
-}
-
 function HomePage() {
     const patientQ = useQuery({ queryKey: ['patient', PATIENT_ID], queryFn: () => getPatient(PATIENT_ID), retry: 2 });
     const glucoseQ = useQuery({ queryKey: ['glucose', PATIENT_ID], queryFn: () => getGlucoseObservations(PATIENT_ID), retry: 2 });
     const a1cQ     = useQuery({ queryKey: ['a1c', PATIENT_ID],     queryFn: () => getA1CObservations(PATIENT_ID),     retry: 2 });
-    const medReqQ  = useQuery({ queryKey: ['medreq', PATIENT_ID],  queryFn: () => getMedicationRequests(PATIENT_ID),  retry: 2 });
-    const medAdmQ  = useQuery({ queryKey: ['medadm', PATIENT_ID],  queryFn: () => getMedicationAdministrations(PATIENT_ID), retry: 2 });
 
-    const allPending = [patientQ, glucoseQ, a1cQ, medReqQ, medAdmQ].some((q) => q.isPending);
-    const anyError   = [patientQ, glucoseQ, a1cQ, medReqQ, medAdmQ].some((q) => q.isError);
+    const allPending = [patientQ, glucoseQ, a1cQ].some((q) => q.isPending);
+    const anyError   = [patientQ, glucoseQ, a1cQ].some((q) => q.isError);
 
     if (allPending) return <p>Loading...</p>;
     if (anyError)   return <p>Error loading data.</p>;
 
-    const patient      = patientQ.data!;
-    const glucoseObs   = (glucoseQ.data!.entry ?? []).map((e) => e.resource as fhirR4.Observation);
-    const a1cObs       = (a1cQ.data!.entry ?? []).map((e) => e.resource as fhirR4.Observation);
-    const medRequests  = (medReqQ.data!.entry ?? []).map((e) => e.resource as fhirR4.MedicationRequest);
-    const medAdmins    = (medAdmQ.data!.entry ?? []).map((e) => e.resource as fhirR4.MedicationAdministration);
+    const patient    = patientQ.data!;
+    const glucoseObs = (glucoseQ.data!.entry ?? []).map((e) => e.resource as fhirR4.Observation);
+    const a1cObs     = (a1cQ.data!.entry ?? []).map((e) => e.resource as fhirR4.Observation);
 
     return (
         <div className={styles.homeContainer}>
@@ -96,58 +82,6 @@ function HomePage() {
                                     <td>{dt}</td>
                                     <td>{value.toFixed(1)}</td>
                                     <td className={a1cStatus(value)}>{a1cLabel(value)}</td>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
-            </section>
-
-            {/* Insulin Prescriptions */}
-            <section className={styles.card}>
-                <h2>Active Insulin Prescriptions</h2>
-                <table className={styles.dataTable}>
-                    <thead>
-                        <tr><th>Medication</th><th>Dose</th><th>Instructions</th></tr>
-                    </thead>
-                    <tbody>
-                        {medRequests.map((req) => {
-                            const dosage = req.dosageInstruction?.at(0);
-                            const dose = dosage?.doseAndRate?.at(0)?.doseQuantity;
-                            return (
-                                <tr key={req.id}>
-                                    <td>{medName(req)}</td>
-                                    <td>{dose ? `${dose.value} ${dose.unit}` : '—'}</td>
-                                    <td>{dosage?.text ?? '—'}</td>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
-            </section>
-
-            {/* Insulin Administration Log */}
-            <section className={styles.card}>
-                <h2>Insulin Administration Log</h2>
-                <table className={styles.dataTable}>
-                    <thead>
-                        <tr><th>Date / Time</th><th>Medication</th><th>Dose</th><th>Status</th></tr>
-                    </thead>
-                    <tbody>
-                        {medAdmins.map((admin) => {
-                            const dose = admin.dosage?.dose;
-                            const dt = admin.effectiveDateTime
-                                ? new Date(admin.effectiveDateTime).toLocaleString()
-                                : '—';
-                            const taken = admin.status === 'completed';
-                            return (
-                                <tr key={admin.id}>
-                                    <td>{dt}</td>
-                                    <td>{adminMedName(admin)}</td>
-                                    <td>{dose ? `${dose.value} ${dose.unit}` : '—'}</td>
-                                    <td className={taken ? styles.normal : styles.low}>
-                                        {taken ? 'Taken' : 'Missed'}
-                                    </td>
                                 </tr>
                             );
                         })}
