@@ -21,10 +21,9 @@ function LoginPage() {
     const mutation = useMutation({
         mutationKey: ['login'],
         mutationFn: postLogin,
-        onSuccess: async (data) => {
+        onSuccess: (data) => {
             if (data.status === 200) {
-                console.log('successful login, invaldating session query..');
-                await queryClient.invalidateQueries({ queryKey: ['session'] });
+                queryClient.setQueryData(['session'], { statusCode: 200 });
                 navigate('/home', { replace: true });
             } else {
                 setErrMsg(JSON.stringify(data.data));
