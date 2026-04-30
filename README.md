@@ -2,15 +2,17 @@
 Type 1 Diabetes Monitoring Dashboard
 
 1. [Tech Stack](#tech-stack)
-2. [Running App Locally](#running-entire-application-locally)
-3. [Frontend](#frontend)
+2. [Mock dataset](#mock-dataset)
+3. [Running Application from GCP](#running-application-from-gcp)
+4. [Running App Locally](#running-entire-application-locally)
+5. [Frontend](#frontend)
     1. [Environments](#environments)
     2. [Run Local](#run-local)
     3. [Run Stage](#run-stage)
     4. [Running Docker Image](#run-docker-image)
         1. [Prerequisites](#prerequisites)
         2. [Instructions](#instructions)
-4. [Backend](#backend)
+6. [Backend](#backend)
     1. [Information](#information)
     2. [Environments](#environments-1)
     3. [Run Local](#run-local-1)
@@ -18,10 +20,15 @@ Type 1 Diabetes Monitoring Dashboard
 
 
 # Tech Stack
+- Frontend -> Backend Reverse Proxy -> Backend FHIR Server
 - Frontend leverages React + TypeScript using Vite.
+- Backend Reverse Proxy leverages GO with libraries to support JWT auth, web flow.
 - Backend and database leverage [HAPI FHIR Starter](https://github.com/hapifhir/hapi-fhir-jpaserver-starter) with custom security implementation 
 
-# Runnig Application From GCP
+# Mock Dataset
+Refer to this repositories mock-data/ folder.
+
+# Running Application From GCP
 1. ```docker compose --env-file .env.dev down -v```
 2. ```docker compose --env-file .env.dev build --no-cache```
 3. ```docker compose --env-file .env.dev up```
