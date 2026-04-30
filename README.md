@@ -23,7 +23,8 @@ Type 1 Diabetes Monitoring Dashboard
 - Frontend -> Backend Reverse Proxy -> Backend FHIR Server
 - Frontend leverages React + TypeScript using Vite.
 - Backend Reverse Proxy leverages GO with libraries to support JWT auth, web flow.
-- Backend and database leverage [HAPI FHIR Starter](https://github.com/hapifhir/hapi-fhir-jpaserver-starter) with custom security implementation 
+- Backend FHIR server and database leverage [HAPI FHIR Starter](https://github.com/hapifhir/hapi-fhir-jpaserver-starter) with custom security implementation
+- Application is Dockerized and deployed to Google Cloud Platform Compute Engine (Virtual Machine)
 
 # Mock Dataset
 Refer to this repositories mock-data/ folder.
