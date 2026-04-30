@@ -38,3 +38,41 @@
 .low    { color: #c0392b; font-weight: 600; }
 .normal { color: #27ae60; }
 .high   { color: #e67e22; font-weight: 600; }
+
+.planMeta {
+    font-size: 0.85rem;
+    color: #666;
+    margin: 0 0 12px;
+}
+
+.card h3 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 16px 0 8px;
+}
+
+.goalList {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.9rem;
+
+    li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 4px 0;
+        border-bottom: 1px solid #eee;
+    }
+}
+
+.goalBadge {
+    font-size: 0.8rem;
+    color: #555;
+    background: #f0f0f0;
+    padding: 2px 8px;
+    border-radius: 10px;
+}

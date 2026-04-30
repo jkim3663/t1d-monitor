@@ -4,6 +4,8 @@ import {
     getPatient,
     getGlucoseObservations,
     getA1CObservations,
+    getCarePlan,
+    getGoals,
 } from '../../apis/patients';
 import styles from './HomePage.module.scss';
 
@@ -34,12 +36,14 @@ function a1cLabel(value: number): string {
 }
 
 function HomePage() {
-    const patientQ = useQuery({ queryKey: ['patient', PATIENT_ID], queryFn: () => getPatient(PATIENT_ID), retry: 2 });
-    const glucoseQ = useQuery({ queryKey: ['glucose', PATIENT_ID], queryFn: () => getGlucoseObservations(PATIENT_ID), retry: 2 });
-    const a1cQ     = useQuery({ queryKey: ['a1c', PATIENT_ID],     queryFn: () => getA1CObservations(PATIENT_ID),     retry: 2 });
+    const patientQ  = useQuery({ queryKey: ['patient',  PATIENT_ID], queryFn: () => getPatient(PATIENT_ID),            retry: 2 });
+    const glucoseQ  = useQuery({ queryKey: ['glucose',  PATIENT_ID], queryFn: () => getGlucoseObservations(PATIENT_ID), retry: 2 });
+    const a1cQ      = useQuery({ queryKey: ['a1c',      PATIENT_ID], queryFn: () => getA1CObservations(PATIENT_ID),     retry: 2 });
+    const carePlanQ = useQuery({ queryKey: ['careplan', PATIENT_ID], queryFn: () => getCarePlan(PATIENT_ID),            retry: 2 });
+    const goalsQ    = useQuery({ queryKey: ['goals',    PATIENT_ID], queryFn: () => getGoals(PATIENT_ID),               retry: 2 });
 
-    const allPending = [patientQ, glucoseQ, a1cQ].some((q) => q.isPending);
-    const anyError   = [patientQ, glucoseQ, a1cQ].some((q) => q.isError);
+    const allPending = [patientQ, glucoseQ, a1cQ, carePlanQ, goalsQ].some((q) => q.isPending);
+    const anyError   = [patientQ, glucoseQ, a1cQ, carePlanQ, goalsQ].some((q) => q.isError);
 
     if (allPending) return <p>Loading...</p>;
     if (anyError)   return <p>Error loading data.</p>;
@@ -47,6 +51,8 @@ function HomePage() {
     const patient    = patientQ.data!;
     const glucoseObs = (glucoseQ.data!.entry ?? []).map((e) => e.resource as fhirR4.Observation);
     const a1cObs     = (a1cQ.data!.entry ?? []).map((e) => e.resource as fhirR4.Observation);
+    const carePlan   = (carePlanQ.data!.entry ?? []).at(0)?.resource as fhirR4.CarePlan | undefined;
+    const goals      = (goalsQ.data!.entry ?? []).map((e) => e.resource as fhirR4.Goal);
 
     return (
         <div className={styles.homeContainer}>
@@ -63,6 +69,41 @@ function HomePage() {
                     </tbody>
                 </table>
             </section>
+
+            {/* Care Plan */}
+            {carePlan && (
+                <section className={styles.card}>
+                    <h2>{carePlan.title ?? 'Diabetes Care Plan'}</h2>
+                    <p className={styles.planMeta}>
+                        {String(carePlan.period?.start ?? '')} — {String(carePlan.period?.end ?? '')}
+                    </p>
+
+                    <h3>Goals</h3>
+                    <ul className={styles.goalList}>
+                        {goals.map((g) => (
+                            <li key={g.id}>
+                                <span>{g.description?.text}</span>
+                                <span className={styles.goalBadge}>{g.achievementStatus?.text}</span>
+                            </li>
+                        ))}
+                    </ul>
+
+                    <h3>Activities</h3>
+                    <table className={styles.dataTable}>
+                        <thead>
+                            <tr><th>Activity</th><th>Status</th></tr>
+                        </thead>
+                        <tbody>
+                            {(carePlan.activity ?? []).map((a, i) => (
+                                <tr key={i}>
+                                    <td>{a.detail?.description ?? '—'}</td>
+                                    <td className={styles.goalBadge}>{a.detail?.status ?? '—'}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </section>
+            )}
 
             {/* A1C History */}
             <section className={styles.card}>

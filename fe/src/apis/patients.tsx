@@ -32,3 +32,13 @@ export function getMedicationAdministrations(patientId: number): Promise<fhirR4.
     const apiEndpoint = `MedicationAdministration?subject=Patient/patient-${patientId}&_sort=-effective-time`;
     return api.get(apiEndpoint).then((resp) => resp.json());
 }
+
+export function getCarePlan(patientId: number): Promise<fhirR4.Bundle> {
+    const apiEndpoint = `CarePlan?subject=Patient/patient-${patientId}&status=active`;
+    return api.get(apiEndpoint).then((resp) => resp.json());
+}
+
+export function getGoals(patientId: number): Promise<fhirR4.Bundle> {
+    const apiEndpoint = `Goal?subject=Patient/patient-${patientId}`;
+    return api.get(apiEndpoint).then((resp) => resp.json());
+}
