@@ -2,7 +2,7 @@
 Type 1 Diabetes Monitoring Dashboard
 
 1. [Tech Stack](#tech-stack)
-2. [Mock dataset](#mock-dataset)
+2. [Technical / User Documentation](#technical--user-documentation)
 3. [Running Application from GCP](#running-application-from-gcp)
 4. [Running App Locally](#running-entire-application-locally)
 
@@ -14,8 +14,12 @@ Type 1 Diabetes Monitoring Dashboard
 - Backend FHIR server and database leverage [HAPI FHIR Starter](https://github.com/hapifhir/hapi-fhir-jpaserver-starter) with custom security implementation
 - Application is Dockerized and deployed to Google Cloud Platform Compute Engine (Virtual Machine)
 
-# Mock Dataset
-Refer to this repositories mock-data/ folder.
+# Technical / User Documentation
+- Project dashboard: Public link available [here](https://github.com/users/jkim3663/projects/2/views/1)
+- Mock dataset: Refer to this repository's mock-data/ folder at root.
+- Deployment info: Refer to below sections on local vs cloud
+- Configuration info: Refer to below sections on local vs cloud
+- Additional documents: Refer to this repository's doc/ folder at root.
 
 # Running Application From GCP
 1. ```docker compose --env-file .env.dev down -v```
