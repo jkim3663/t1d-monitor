@@ -39,6 +39,97 @@
 .normal { color: #27ae60; }
 .high   { color: #e67e22; font-weight: 600; }
 
+.riskRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    border: 1px solid #e74c3c;
+    border-radius: 6px;
+    background: #fff5f5;
+}
+
+.riskDescription {
+    font-size: 0.9rem;
+    color: #c0392b;
+}
+
+.riskButton {
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #fff;
+    background: #c0392b;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover { background: #a93226; }
+}
+
+.alertPanel {
+    border: 1px solid #e74c3c;
+    border-radius: 6px;
+    background: #fff;
+    padding: 16px;
+}
+
+.alertHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+    color: #c0392b;
+}
+
+.dismissButton {
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    border: 1px solid #c0392b;
+    border-radius: 4px;
+    color: #c0392b;
+    background: #fff;
+    cursor: pointer;
+
+    &:hover { background: #fff5f5; }
+}
+
+.alertList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    li {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        padding: 10px;
+        border-radius: 4px;
+
+        p { margin: 4px 0 0; font-size: 0.85rem; color: #444; }
+    }
+}
+
+.flagHigh    { background: #fff0f0; }
+.flagWarning { background: #fffbf0; }
+
+.flagBadge {
+    flex-shrink: 0;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-top: 2px;
+    color: #fff;
+    background: #c0392b;
+}
+
+.flagWarning .flagBadge { background: #e67e22; }
+
 .planMeta {
     font-size: 0.85rem;
     color: #666;

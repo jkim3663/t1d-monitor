@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fhirR4 } from '@smile-cdr/fhirts';
+import { evaluateHypoglycemiaRisk } from '../../utils/hypoglycemiaRisk';
 import {
     getPatient,
     getGlucoseObservations,
@@ -36,6 +38,8 @@ function a1cLabel(value: number): string {
 }
 
 function HomePage() {
+    const [alertOpen, setAlertOpen] = useState(false);
+
     const patientQ  = useQuery({ queryKey: ['patient',  PATIENT_ID], queryFn: () => getPatient(PATIENT_ID),            retry: 2 });
     const glucoseQ  = useQuery({ queryKey: ['glucose',  PATIENT_ID], queryFn: () => getGlucoseObservations(PATIENT_ID), retry: 2 });
     const a1cQ      = useQuery({ queryKey: ['a1c',      PATIENT_ID], queryFn: () => getA1CObservations(PATIENT_ID),     retry: 2 });
@@ -54,8 +58,43 @@ function HomePage() {
     const carePlan   = (carePlanQ.data!.entry ?? []).at(0)?.resource as fhirR4.CarePlan | undefined;
     const goals      = (goalsQ.data!.entry ?? []).map((e) => e.resource as fhirR4.Goal);
 
+    const riskFlags = evaluateHypoglycemiaRisk(glucoseObs, a1cObs);
+
     return (
         <div className={styles.homeContainer}>
+
+            {/* Risk trigger */}
+            {riskFlags.length > 0 && (
+                <div className={styles.riskRow}>
+                    <span className={styles.riskDescription}>
+                        <strong>High Risk for Hypoglycemia</strong> — {riskFlags.length} condition{riskFlags.length > 1 ? 's' : ''} flagged
+                    </span>
+                    <button className={styles.riskButton} onClick={() => setAlertOpen(true)}>
+                        Trigger Alert
+                    </button>
+                </div>
+            )}
+
+            {/* Dismissible alert panel */}
+            {alertOpen && (
+                <div className={styles.alertPanel}>
+                    <div className={styles.alertHeader}>
+                        <strong>ALERT: High Risk for Hypoglycemia</strong>
+                        <button className={styles.dismissButton} onClick={() => setAlertOpen(false)}>✕ Dismiss</button>
+                    </div>
+                    <ul className={styles.alertList}>
+                        {riskFlags.map((flag, i) => (
+                            <li key={i} className={flag.severity === 'high' ? styles.flagHigh : styles.flagWarning}>
+                                <span className={styles.flagBadge}>{flag.severity === 'high' ? 'HIGH' : 'WARN'}</span>
+                                <div>
+                                    <strong>{flag.title}</strong>
+                                    <p>{flag.detail}</p>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
 
             {/* Patient Info */}
             <section className={styles.card}>
